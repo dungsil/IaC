@@ -1,4 +1,7 @@
 version: '3.8'
+networks:
+  coolify:
+    driver: bridge
 services:
   coolify:
     container_name: coolify
@@ -9,6 +12,8 @@ services:
         published: 3000
         protocol: tcp
         mode: host
+    networks:
+      - coolify
     volumes:
       - ".docker-volumes/coolify/db:/app/db"
       - ".docker-volumes/coolify/ssl:/app/ssl"
@@ -20,3 +25,11 @@ services:
       - COOLIFY_WHITE_LABELED=false
       - COOLIFY_AUTO_UPDATE=false
       - COOLIFY_DATABASE_URL=file:/app/db/dev.db
+  coolify-redis:
+    container_name: coolify-redis
+    image: bitnami/redis:6.2
+    restart: unless-stopped
+    networks:
+      - coolify
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
