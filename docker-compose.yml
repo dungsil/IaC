@@ -45,9 +45,9 @@ services:
       - --providers.http.pollTimeout=5s
       - --log.level=error
     ports:
-      - '80:80'
-      - '443:443'
-      - '8080:8080'
+      - '8080:80'
+      - '8443:443'
+      - '18080:8080'
     volumes:
       - "${DOCKER_HOST_PATH}:/var/run/docker.sock"
     extra_hosts:
