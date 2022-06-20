@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  coolify:
+    container_name: coolify
+    image: coollabsio/coolify
+    restart: unless-stopped
+    ports:
+      - target: 3000
+        published: 3000
+        protocol: tcp
+        mode: host
+    volumes:
+      - ".docker-volumes/coolify/db:/app/db"
+      - ".docker-volumes/coolify/ssl:/app/ssl"
+      - "~/.cert:/etc/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    env_file: [.env]
+    environment:
+      - COOLIFY_IS_ON=docker
+      - COOLIFY_WHITE_LABELED=false
+      - COOLIFY_AUTO_UPDATE=false
+      - COOLIFY_DATABASE_URL=file:/app/db/dev.db
