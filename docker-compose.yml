@@ -33,6 +33,8 @@ services:
       - coolify
     environment:
       ALLOW_EMPTY_PASSWORD: "yes"
+    sysctls:
+      - "vm.overcommit_memory=1" # Redis 권장 설정
   proxy:
     image: traefik:v2.6
     command:
